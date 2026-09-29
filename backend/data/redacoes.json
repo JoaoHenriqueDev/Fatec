@@ -1,0 +1,92 @@
+[
+  {
+    "id": "2017-1-redacao",
+    "ano": 2017,
+    "semestre": 1,
+    "tema": "Perspectivas de igualdade entre mulheres e homens no mundo do trabalho."
+  },
+  {
+    "id": "2017-2-redacao",
+    "ano": 2017,
+    "semestre": 2,
+    "tema": "Impactos da imigração no mercado de trabalho."
+  },
+  {
+    "id": "2018-1-redacao",
+    "ano": 2018,
+    "semestre": 1,
+    "tema": "O emprego perfeito: realidade ou ficção?"
+  },
+  {
+    "id": "2018-2-redacao",
+    "ano": 2018,
+    "semestre": 2,
+    "tema": "O jeitinho brasileiro é uma forma de resiliência ou falta de honestidade?"
+  },
+  {
+    "id": "2019-1-redacao",
+    "ano": 2019,
+    "semestre": 1,
+    "tema": "Qual o papel da escola na formação do jovem para o mercado de trabalho do século XXI?"
+  },
+  {
+    "id": "2019-2-redacao",
+    "ano": 2019,
+    "semestre": 2,
+    "tema": "Tecnologia e informação: como transformar opinião em conhecimento?"
+  },
+  {
+    "id": "2020-1-redacao",
+    "ano": 2020,
+    "semestre": 1,
+    "tema": "Empreendedorismo na Sociedade Brasileira do Século XXI."
+  },
+  {
+    "id": "2022-2-redacao",
+    "ano": 2022,
+    "semestre": 2,
+    "tema": "Desigualdade de gênero e mercado de trabalho no Brasil contemporâneo"
+  },
+  {
+    "id": "2023-1-redacao",
+    "ano": 2023,
+    "semestre": 1,
+    "tema": "Como se preparar para o mercado de trabalho diante dos avanços tecnológicos da 4ª Revolução Industrial?"
+  },
+  {
+    "id": "2023-2-redacao",
+    "ano": 2023,
+    "semestre": 2,
+    "tema": "Como combater a insegurança alimentar no Brasil?"
+  },
+  {
+    "id": "2024-1-redacao",
+    "ano": 2024,
+    "semestre": 1,
+    "tema": "A importância da representatividade na Arte para a sociedade."
+  },
+  {
+    "id": "2024-2-redacao",
+    "ano": 2024,
+    "semestre": 2,
+    "tema": "Como superar a permanente exploração da América Latina?"
+  },
+  {
+    "id": "2025-2-redacao",
+    "ano": 2025,
+    "semestre": 2,
+    "tema": "Como a tecnologia pode afetar o desenvolvimento de uma economia sustentável?"
+  },
+  {
+    "id": "2026-1-redacao",
+    "ano": 2026,
+    "semestre": 1,
+    "tema": "Como utilizar a tecnologia para combater a desinformação e disseminar o conhecimento científico?"
+  },
+  {
+    "id": "2026-2-redacao",
+    "ano": 2026,
+    "semestre": 2,
+    "tema": "Qual deve ser o papel do futebol no enfrentamento dos preconceitos sociais?"
+  }
+]

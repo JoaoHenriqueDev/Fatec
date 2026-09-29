@@ -1,0 +1,6 @@
+node_modules/
+dist/
+backend/data/app.db
+backend/data/app.db-*
+extraction/debug-*
+.env
