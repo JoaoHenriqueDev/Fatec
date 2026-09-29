@@ -2,6 +2,9 @@
   "name": "fatec-vestibular-estudos",
   "private": true,
   "version": "1.0.0",
+  "engines": {
+    "node": ">=22.5.0"
+  },
   "scripts": {
     "dev": "concurrently -n backend,frontend -c blue,green \"npm run dev --prefix backend\" \"npm run dev --prefix frontend\"",
     "extract": "npm run extract --prefix extraction",
