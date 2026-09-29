@@ -42,7 +42,21 @@
       "Bash(disown)",
       "Bash(timeout 30 bash -c 'until curl -sf http://localhost:3001/health >/dev/null; do sleep 1; done')",
       "Bash(timeout 30 bash -c 'until curl -sf http://localhost:5173/ >/dev/null; do sleep 1; done')",
-      "Bash(curl -s -o /dev/null -w \"frontend status: %{http_code}\\\\n\" http://localhost:5173/)"
+      "Bash(curl -s -o /dev/null -w \"frontend status: %{http_code}\\\\n\" http://localhost:5173/)",
+      "Bash(rm -f backend/data/app.db *)",
+      "Bash(curl -s http://localhost:3005/health)",
+      "Bash(curl -s -o /dev/null -w \"root: %{http_code}\\\\n\" http://localhost:3005/)",
+      "Bash(curl -s -o /dev/null -w \"spa-route: %{http_code}\\\\n\" http://localhost:3005/app/questoes)",
+      "PowerShell(Get-Process node -ErrorAction SilentlyContinue)",
+      "PowerShell(Stop-Process -Force -ErrorAction SilentlyContinue)",
+      "Bash(PORT=3005 npm start)",
+      "Bash(curl -s -o /dev/null -w \"static-asset: %{http_code}\\\\n\" http://localhost:3005/assets/2024-1/q01.png)",
+      "Bash(curl -s http://localhost:3005/app/questoes)",
+      "Bash(curl -s -X POST http://localhost:3005/auth/register -H \"Content-Type: application/json\" -d '{\"nome\":\"X\",\"email\":\"x@x.com\",\"senha\":\"123456\",\"confirmarSenha\":\"123456\"}')",
+      "Bash(git add *)"
+    ],
+    "additionalDirectories": [
+      "\\tmp"
     ]
   }
 }

@@ -4,7 +4,9 @@ import fs from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const dataDir = path.join(__dirname, '..', 'data');
+// DATA_DIR permite apontar para um volume persistente (ex: no Railway) em vez do
+// diretório local do projeto, já que o filesystem do container é efêmero por padrão.
+const dataDir = process.env.DATA_DIR || path.join(__dirname, '..', 'data');
 fs.mkdirSync(dataDir, { recursive: true });
 
 export const db = new DatabaseSync(path.join(dataDir, 'app.db'));
