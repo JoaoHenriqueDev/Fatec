@@ -6,6 +6,7 @@ import Layout from './components/Layout.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import Questoes from './pages/Questoes.jsx';
 import Trilha from './pages/Trilha.jsx';
+import Topico from './pages/Topico.jsx';
 import Simulado from './pages/Simulado.jsx';
 import Redacoes from './pages/Redacoes.jsx';
 import Dashboard from './pages/Dashboard.jsx';
@@ -22,6 +23,7 @@ export default function App() {
           <Route index element={<Navigate to="questoes" replace />} />
           <Route path="questoes" element={<Questoes />} />
           <Route path="trilha" element={<Trilha />} />
+          <Route path="trilha/:id" element={<Topico />} />
           <Route path="simulado" element={<Simulado />} />
           <Route path="redacoes" element={<Redacoes />} />
           <Route path="painel" element={<Dashboard />} />
