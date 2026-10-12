@@ -41,4 +41,7 @@ export const api = {
   postSimulado: (payload) => request('/simulados', { method: 'POST', body: payload }),
   finalizarSimulado: (id) => request(`/simulados/${id}/finalizar`, { method: 'PUT' }),
   getEstatisticas: () => request('/estatisticas'),
+  getTrilha: () => request('/trilha/topicos'),
+  getQuizTopico: (id) => request(`/trilha/topicos/${id}/quiz`),
+  postQuizTopico: (id, respostas) => request(`/trilha/topicos/${id}/quiz`, { method: 'POST', body: { respostas } }),
 };

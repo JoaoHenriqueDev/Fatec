@@ -1,0 +1,26 @@
+[
+  {
+    "id": "mat-funcoes-basicas",
+    "materia": "Matemática",
+    "nome": "Funções e cálculo básico",
+    "ordem": 1,
+    "conteudo": "Conteúdo de exemplo para este tópico (substitua pelo texto real).\n\nEsta trilha cobre funções e cálculo básico: como identificar uma função, ler seu gráfico e aplicar os cálculos mais comuns cobrados no vestibular da FATEC.",
+    "videoUrl": "https://www.youtube.com/embed/SEED_VIDEO_A"
+  },
+  {
+    "id": "port-interpretacao-textual",
+    "materia": "Português",
+    "nome": "Interpretação textual",
+    "ordem": 1,
+    "conteudo": "Conteúdo de exemplo para este tópico (substitua pelo texto real).\n\nEsta trilha cobre interpretação textual: como identificar a ideia central de um texto, os argumentos do autor e a intenção comunicativa por trás dele.",
+    "videoUrl": "https://www.youtube.com/embed/SEED_VIDEO_B"
+  },
+  {
+    "id": "hist-brasil-colonia",
+    "materia": "História",
+    "nome": "Brasil Colônia",
+    "ordem": 1,
+    "conteudo": "Conteúdo de exemplo para este tópico (substitua pelo texto real).\n\nEsta trilha ainda não tem questões marcadas — serve para validar o comportamento do quiz quando o pool de um tópico está vazio.",
+    "videoUrl": "https://www.youtube.com/embed/SEED_VIDEO_C"
+  }
+]

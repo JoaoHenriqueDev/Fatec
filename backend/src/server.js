@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
 import path from 'node:path';
@@ -11,6 +12,7 @@ import { router as redacoesRouter } from './routes/redacoes.js';
 import { router as respostasRouter } from './routes/respostas.js';
 import { router as simuladosRouter } from './routes/simulados.js';
 import { router as estatisticasRouter } from './routes/estatisticas.js';
+import { router as trilhaRouter } from './routes/trilha.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
@@ -25,6 +27,7 @@ app.use(redacoesRouter);
 app.use(respostasRouter);
 app.use(simuladosRouter);
 app.use(estatisticasRouter);
+app.use(trilhaRouter);
 
 app.get('/health', (_req, res) => res.json({ ok: true }));
 

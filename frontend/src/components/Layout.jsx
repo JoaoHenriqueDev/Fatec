@@ -4,6 +4,7 @@ import { useTheme } from '../context/ThemeContext.jsx';
 
 const links = [
   { to: '/app/questoes', label: 'Questões' },
+  { to: '/app/trilha', label: 'Trilha' },
   { to: '/app/simulado', label: 'Simulado' },
   { to: '/app/redacoes', label: 'Redação' },
   { to: '/app/painel', label: 'Painel' },
