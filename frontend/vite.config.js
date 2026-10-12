@@ -13,6 +13,7 @@ export default defineConfig({
       '/respostas': 'http://localhost:3001',
       '/simulados': 'http://localhost:3001',
       '/estatisticas': 'http://localhost:3001',
+      '/trilha': 'http://localhost:3001',
     },
   },
 });
