@@ -8,6 +8,13 @@
       "when": 1791778044411,
       "tag": "0000_curvy_patriot",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791780046654,
+      "tag": "0001_tearful_talos",
+      "breakpoints": true
     }
   ]
 }
