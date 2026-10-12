@@ -7,6 +7,12 @@ const dataDir = path.join(__dirname, '..', 'data');
 
 export const questoes = JSON.parse(fs.readFileSync(path.join(dataDir, 'questoes.json'), 'utf8'));
 export const redacoes = JSON.parse(fs.readFileSync(path.join(dataDir, 'redacoes.json'), 'utf8'));
+export const topicos = JSON.parse(fs.readFileSync(path.join(dataDir, 'topicos.json'), 'utf8'));
+
+const questoesTopicos = JSON.parse(fs.readFileSync(path.join(dataDir, 'questoes-topicos.json'), 'utf8'));
+for (const questao of questoes) {
+  questao.topico = questoesTopicos[questao.id] ?? null;
+}
 
 export const questoesById = new Map(questoes.map((q) => [q.id, q]));
 
