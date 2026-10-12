@@ -10,7 +10,7 @@
     "extract": "npm run extract --prefix extraction",
     "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
     "db:migrate": "npm run db:migrate --prefix backend",
-    "start": "npm start --prefix backend"
+    "start": "npm run db:migrate && npm start --prefix backend"
   },
   "devDependencies": {
     "concurrently": "^9.1.0"
