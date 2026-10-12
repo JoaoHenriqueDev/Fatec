@@ -3,6 +3,8 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { api } from '../api/client.js';
 import QuestionCard from '../components/QuestionCard.jsx';
 
+const SEM_QUESTOES = 'Ainda não há questões cadastradas para este tópico';
+
 export default function Topico() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -34,7 +36,13 @@ export default function Topico() {
     api
       .getQuizTopico(id)
       .then(() => setTemQuestoes(true))
-      .catch(() => setTemQuestoes(false));
+      .catch((err) => {
+        if (err.message === SEM_QUESTOES) {
+          setTemQuestoes(false);
+        } else {
+          setErro(err.message);
+        }
+      });
   }, [id]);
 
   async function iniciarQuiz() {
@@ -71,7 +79,7 @@ export default function Topico() {
     }
   }
 
-  if (erro) return <p className="text-sm text-red-600">{erro}</p>;
+  if (erro && !topico) return <p className="text-sm text-red-600">{erro}</p>;
   if (!topico) return <p className="text-slate-500">Carregando...</p>;
 
   if (fase === 'conteudo') {
@@ -97,12 +105,13 @@ export default function Topico() {
               Ainda não há questões cadastradas para este tópico — volte em breve.
             </p>
           )}
+          {erro && <p className="text-sm text-red-600">{erro}</p>}
           <button
             onClick={iniciarQuiz}
-            disabled={!temQuestoes}
+            disabled={!temQuestoes || loading}
             className="w-full py-2.5 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 disabled:opacity-60"
           >
-            Fazer quiz
+            {loading ? 'Preparando...' : 'Fazer quiz'}
           </button>
         </div>
       </div>
@@ -111,6 +120,7 @@ export default function Topico() {
 
   if (fase === 'quiz') {
     const atual = questoesQuiz[index];
+    if (!atual) return null;
     const respondidas = Object.keys(respostasQuiz).length;
     return (
       <div className="space-y-4">
@@ -151,7 +161,7 @@ export default function Topico() {
     );
   }
 
-  const { acertos, total, aprovado, melhorAcertos, tentativas, questoes: corrigidas } = resultado;
+  const { acertos, total, emBranco, aprovado, melhorAcertos, tentativas, questoes: corrigidas } = resultado;
   return (
     <div className="space-y-6">
       <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 text-center">
@@ -159,9 +169,13 @@ export default function Topico() {
         <p className="text-4xl font-extrabold text-blue-600 my-3">
           {acertos}/{total}
         </p>
+        {emBranco > 0 && (
+          <p className="text-sm text-amber-600 dark:text-amber-400">Você deixou {emBranco} questão(ões) em branco.</p>
+        )}
         <p className="text-slate-500 dark:text-slate-400">
           Melhor resultado: {melhorAcertos}/{total} · {tentativas} tentativa(s)
         </p>
+        {erro && <p className="text-sm text-red-600 mt-2">{erro}</p>}
       </div>
 
       <h2 className="font-bold">Gabarito</h2>
@@ -174,9 +188,10 @@ export default function Topico() {
       <div className="flex gap-3">
         <button
           onClick={iniciarQuiz}
-          className="flex-1 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 font-semibold hover:bg-slate-100 dark:hover:bg-slate-800"
+          disabled={loading}
+          className="flex-1 py-2.5 rounded-lg border border-slate-300 dark:border-slate-700 font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 disabled:opacity-60"
         >
-          Tentar de novo
+          {loading ? 'Preparando...' : 'Tentar de novo'}
         </button>
         <button
           onClick={() => navigate('/app/trilha')}

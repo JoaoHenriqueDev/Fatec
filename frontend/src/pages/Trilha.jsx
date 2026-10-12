@@ -46,8 +46,8 @@ export default function Trilha() {
                 className="flex flex-col items-center gap-1.5 w-24 text-center group"
               >
                 <span
-                  className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-sm ${STATUS_STYLE[t.status]} group-hover:opacity-80`}
-                  title={STATUS_LABEL[t.status]}
+                  className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-sm ${STATUS_STYLE[t.status] ?? STATUS_STYLE.nao_iniciado} group-hover:opacity-80`}
+                  title={STATUS_LABEL[t.status] ?? STATUS_LABEL.nao_iniciado}
                 >
                   {t.status === 'aprovado' ? '✓' : t.ordem}
                 </span>

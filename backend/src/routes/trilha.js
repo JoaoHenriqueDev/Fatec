@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { eq, and, sql } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import { db } from '../db.js';
 import { respostas, trilhaProgresso } from '../schema.js';
 import { requireAuth } from '../middleware/auth.js';
@@ -42,6 +42,9 @@ router.get(
   '/trilha/topicos/:id/quiz',
   requireAuth,
   asyncHandler(async (req, res) => {
+    if (!topicos.some((t) => t.id === req.params.id)) {
+      return res.status(404).json({ erro: 'Tópico não encontrado' });
+    }
     const pool = questoes.filter((q) => q.topico === req.params.id);
     if (pool.length === 0) {
       return res.status(404).json({ erro: 'Ainda não há questões cadastradas para este tópico' });
@@ -57,10 +60,20 @@ router.post(
   requireAuth,
   asyncHandler(async (req, res) => {
     const topicoId = req.params.id;
+    if (!topicos.some((t) => t.id === topicoId)) {
+      return res.status(404).json({ erro: 'Tópico não encontrado' });
+    }
+
     const enviadas = req.body?.respostas;
     if (!enviadas || typeof enviadas !== 'object' || Array.isArray(enviadas)) {
       return res.status(400).json({ erro: 'Envie o campo respostas' });
     }
+
+    const pool = questoes.filter((q) => q.topico === topicoId);
+    if (pool.length === 0) {
+      return res.status(404).json({ erro: 'Ainda não há questões cadastradas para este tópico' });
+    }
+    const total = Math.min(10, pool.length);
 
     const entradas = Object.entries(enviadas).filter(
       ([questaoId]) => questoesById.get(questaoId)?.topico === topicoId
@@ -72,7 +85,7 @@ router.post(
     const questoesCorrigidas = [];
     let acertos = 0;
 
-    const { melhorAcertos, tentativas, aprovado } = await db.transaction(async (tx) => {
+    const [progresso] = await db.transaction(async (tx) => {
       for (const [questaoId, resposta] of entradas) {
         const questao = questoesById.get(questaoId);
         const correta = questao.anulada ? true : resposta === questao.correta;
@@ -87,31 +100,39 @@ router.post(
         questoesCorrigidas.push(questao);
       }
 
-      const total = entradas.length;
       const aprovadoNestaTentativa = acertos / total >= 0.7;
 
-      const [existente] = await tx
-        .select()
-        .from(trilhaProgresso)
-        .where(and(eq(trilhaProgresso.userId, req.user.id), eq(trilhaProgresso.topicoId, topicoId)));
-
-      const aprovado = aprovadoNestaTentativa || existente?.status === 'aprovado';
-      const melhorAcertos = Math.max(acertos, existente?.melhorAcertos ?? 0);
-      const tentativas = (existente?.tentativas ?? 0) + 1;
-      const status = aprovado ? 'aprovado' : 'reprovado';
-
-      await tx
+      return tx
         .insert(trilhaProgresso)
-        .values({ userId: req.user.id, topicoId, status, melhorAcertos, tentativas })
+        .values({
+          userId: req.user.id,
+          topicoId,
+          status: aprovadoNestaTentativa ? 'aprovado' : 'reprovado',
+          melhorAcertos: acertos,
+          tentativas: 1,
+        })
         .onConflictDoUpdate({
           target: [trilhaProgresso.userId, trilhaProgresso.topicoId],
-          set: { status, melhorAcertos, tentativas, atualizadoEm: sql`now()` },
-        });
-
-      return { melhorAcertos, tentativas, aprovado };
+          set: {
+            tentativas: sql`${trilhaProgresso.tentativas} + 1`,
+            melhorAcertos: sql`GREATEST(${trilhaProgresso.melhorAcertos}, ${acertos})`,
+            status: sql`CASE WHEN ${trilhaProgresso.status} = 'aprovado' OR ${aprovadoNestaTentativa} THEN 'aprovado' ELSE 'reprovado' END`,
+            atualizadoEm: sql`now()`,
+          },
+        })
+        .returning();
     });
 
-    const total = entradas.length;
-    res.json({ acertos, total, aprovado, melhorAcertos, tentativas, questoes: questoesCorrigidas });
+    const emBranco = Math.max(0, total - entradas.length);
+
+    res.json({
+      acertos,
+      total,
+      emBranco,
+      aprovado: progresso.status === 'aprovado',
+      melhorAcertos: progresso.melhorAcertos,
+      tentativas: progresso.tentativas,
+      questoes: questoesCorrigidas,
+    });
   })
 );
